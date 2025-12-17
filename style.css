@@ -69,17 +69,22 @@ h1 {
 }
 
 /* GRID DE TARJETAS (RESPONSIVE) */
-/* --- ESTILO TIPO PINTEREST (MASONRY) --- */
 .container {
-    max-width: 95%;
+    max-width: 1200px;
+    /* Un ancho máximo razonable para PC */
     margin: 20px auto;
-    padding: 0 10px;
+    padding: 0 20px;
 }
 
 .masonry-grid {
-    column-count: 5;
-    /* 5 columnas en pantallas grandes */
-    column-gap: 20px;
+    display: flex;
+    /* Activa el modo fila */
+    flex-wrap: wrap;
+    /* Permite que bajen si no caben */
+    justify-content: center;
+    /* Centra las tarjetas si sobran espacios a los lados */
+    gap: 25px;
+    /* Espacio entre tarjetas */
 }
 
 .card {
@@ -87,14 +92,19 @@ h1 {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    margin-bottom: 20px;
-    /* Espacio vertical entre tarjetas */
-    break-inside: avoid;
-    /* EVITA QUE LA TARJETA SE CORTE ENTRE COLUMNAS */
-    display: inline-block;
-    /* Necesario para que break-inside funcione bien */
-    width: 100%;
     transition: transform 0.2s;
+
+    /* --- AQUÍ ESTÁ EL TRUCO DEL ANCHO FIJO --- */
+    width: 300px;
+    /* Ancho fijo en PC */
+    flex-grow: 0;
+    /* Evita que se estiren de más */
+    display: flex;
+    /* Para alinear contenido interno */
+    flex-direction: column;
+    /* Imagen arriba, texto abajo */
+    height: fit-content;
+    /* La altura se ajusta al contenido */
 }
 
 .card:hover {
@@ -104,49 +114,53 @@ h1 {
 
 .card-img {
     width: 100%;
-    height: auto;
-    /* IMPORTANTE: Mantiene la altura original de la foto */
+    height: 200px;
+    /* Altura fija para la imagen (hace que se vean uniformes) */
+    object-fit: cover;
+    /* Recorta la imagen para que no se deforme */
     display: block;
     cursor: zoom-in;
-    /* El cursor cambia a lupa */
 }
 
 .card-body {
     padding: 15px;
 }
 
-/* RESPONSIVE DEL MASONRY */
-@media (max-width: 1400px) {
-    .masonry-grid {
-        column-count: 4;
-    }
-}
 
-@media (max-width: 900px) {
-    .masonry-grid {
-        column-count: 3;
-    }
-}
+/* --- RESPONSIVE PARA CELULARES --- */
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
+    .card {
+        /* En celular, que ocupen casi la mitad (- gap) */
+        width: calc(50% - 15px);
+    }
+
+    .card-img {
+        height: 150px;
+        /* Imagen más pequeña en celular */
+    }
+
     .masonry-grid {
-        column-count: 2;
-        column-gap: 15px;
+        gap: 15px;
     }
 }
 
 @media (max-width: 400px) {
-    .masonry-grid {
-        column-count: 2;
-        column-gap: 10px;
+    .container {
+        padding: 0 10px;
+    }
+
+    /* En pantallas muy pequeñas, forzamos 2 columnas también */
+    .card {
+        width: calc(50% - 10px);
     }
 
     .card h3 {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 
-    .card-body {
-        padding: 10px;
+    .card-img {
+        height: 120px;
     }
 }
 
