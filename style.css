@@ -1,0 +1,305 @@
+/* RESET Y FUENTES */
+:root {
+    --primary: #d42426;
+    /* Rojo Navidad */
+    --bg: #f4f6f8;
+    --card-bg: #ffffff;
+    --text: #2c3e50;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding-top: 80px;
+    /* Espacio para el header fijo */
+}
+
+/* HEADER FIJO */
+header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    /* Efecto vidrio */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 10px 0;
+}
+
+.header-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    flex-wrap: wrap;
+}
+
+h1 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: var(--primary);
+}
+
+/* BUSCADOR */
+.search-box {
+    background: #f0f2f5;
+    border-radius: 20px;
+    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 5px;
+}
+
+.search-box input {
+    border: none;
+    background: transparent;
+    padding: 8px;
+    width: 100%;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+/* GRID DE TARJETAS (RESPONSIVE) */
+/* --- ESTILO TIPO PINTEREST (MASONRY) --- */
+.container {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 0 10px;
+}
+
+.masonry-grid {
+    column-count: 5;
+    /* 5 columnas en pantallas grandes */
+    column-gap: 20px;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    /* Espacio vertical entre tarjetas */
+    break-inside: avoid;
+    /* EVITA QUE LA TARJETA SE CORTE ENTRE COLUMNAS */
+    display: inline-block;
+    /* Necesario para que break-inside funcione bien */
+    width: 100%;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-img {
+    width: 100%;
+    height: auto;
+    /* IMPORTANTE: Mantiene la altura original de la foto */
+    display: block;
+    cursor: zoom-in;
+    /* El cursor cambia a lupa */
+}
+
+.card-body {
+    padding: 15px;
+}
+
+/* RESPONSIVE DEL MASONRY */
+@media (max-width: 1400px) {
+    .masonry-grid {
+        column-count: 4;
+    }
+}
+
+@media (max-width: 900px) {
+    .masonry-grid {
+        column-count: 3;
+    }
+}
+
+@media (max-width: 600px) {
+    .masonry-grid {
+        column-count: 2;
+        column-gap: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .masonry-grid {
+        column-count: 2;
+        column-gap: 10px;
+    }
+
+    .card h3 {
+        font-size: 0.9rem;
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+}
+
+
+/* --- MODAL PARA VER IMAGEN EN GRANDE (LIGHTBOX) --- */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    /* Fondo oscuro */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    /* Por encima de todo */
+    cursor: zoom-out;
+}
+
+.lightbox.active {
+    display: flex;
+    animation: fadeIn 0.3s;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    object-fit: contain;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* MODAL (POPUP) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    /* Oculto por defecto */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.modal-overlay.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}
+
+/* FORMULARIO */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+select,
+input[type="text"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    /* Importante para que no se salga del ancho */
+}
+
+.btn-submit {
+    background: var(--primary);
+    color: white;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* BOTÓN FLOTANTE (FAB) */
+.fab {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    box-shadow: 0 4px 15px rgba(212, 36, 38, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 90;
+    transition: transform 0.2s;
+}
+
+.fab:active {
+    transform: scale(0.95);
+}
+
+/* AJUSTES CELULAR */
+@media (max-width: 600px) {
+    .header-content {
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+    }
+
+    .search-box {
+        max-width: 100%;
+    }
+}
